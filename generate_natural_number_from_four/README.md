@@ -1,19 +1,19 @@
-# Problem
+## Problem
 
 A proof exists that any natural number P can be generated from the natural
 number N' = 4 by successive application of a rule chosen from:
 
-  (rule 1) if N' ends with 1, append 0
-  (rule 2) if N' does not end with 1, append 4
-  (rule 3) divide N' by 2
+- rule 1: if N' ends with 1, append 0
+- rule 2: if N' does not end with 1, append 4
+- rule 3: divide N' by 2
 
 Constraints:
 
-natural numbers start with 1
-  time < 1s
+- natural numbers start with 1
+- time < 1s
 
 Examples:
-
+<pre>
   target:  13        target:  17
 
   start:   4         start:   4
@@ -24,8 +24,9 @@ Examples:
   divide2: 52        divide2: 3
   divide2: 26        append4: 34
   divide2: 13        divide2: 17
+</pre>
 
-# Observations:
+## Observations
 
 0. There is an implicit "rule 0": if N == N' == 4, stop
 
@@ -43,7 +44,7 @@ Examples:
 
 This can be solved iteratively or recursively.
 
-# Recursive algorithm
+## Recursive algorithm
 
 Construct a 'path' of rule applications:
 
@@ -58,10 +59,10 @@ Construct a 'path' of rule applications:
 
    2b. examine digit:
 
-       if digit == 4: discard it, and append "rule 2" to the path returned by
-           recursing on prefix.
+   - if digit == 4: discard it, and append "rule 2" to the path returned by
+     recursing on prefix.
 
-       if digit == 0: discard it, and append "rule 1" to the path returned by
-           recursing on prefix.
+   - if digit == 0: discard it, and append "rule 1" to the path returned by
+     recursing on prefix.
 
-       otherwise: append "rule 3" to the path returned by recursing on 2 * N.
+   - otherwise: append "rule 3" to the path returned by recursing on 2 * N.

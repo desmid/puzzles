@@ -1,21 +1,22 @@
-# Problem
+## Problem
 
 Given a natural number N, find the next number P > N that that reuses the same
 set of digits (if P exists). If there is no solution, return -1.
 
 Constraints:
 
-  0 <= N <= 2e12
-  time < 1s
+- 0 <= N <= 2e12
+- time < 1s
 
 Examples:
-
+<pre>
   11123   -> 11132
   1234321 -> 1241233
   1111    -> no solution
   4321    -> no solution
+</pre>
 
-# Observations:
+## Observations
 
 1. If the number consists of uniform digits (like 1, 11, 111) there is no
    solution, since all permutations are identical.
@@ -36,7 +37,7 @@ Examples:
 6. After the exchange, the rightwards digits should be sorted (increasing)
    to produce the lowest possible number.
 
-# Algorithm:
+## Algorithm
 
 1. Split the number into digits.
 
