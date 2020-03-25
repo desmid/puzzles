@@ -1,3 +1,13 @@
+* GitHub stuff
+
+- Create empty project 'puzzles' on GitHub
+
+- Given already uploaded ssh key for desmid account:
+
+  git remote set-url origin git@github.com:desmid/puzzles
+  git push --set-upstream origin master
+
+
 * Maven source tree
 
 See: https://www.baeldung.com/maven-multi-module
