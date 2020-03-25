@@ -1,0 +1,175 @@
+* Maven source tree
+
+See: https://www.baeldung.com/maven-multi-module
+See: https://howtodoinjava.com/maven/maven-parent-child-pom-example/
+
+Make a root-level pom with 'packaging' type 'pom' and all the normal
+properties, dependencies, and build material.
+
+** Build maven parent project
+
+  mvn archetype:generate \
+      -DarchetypeGroupId=org.apache.maven.archetypes \
+      -DarchetypeArtifactId=maven-archetype-simple \
+      -DarchetypeVersion=1.4 \
+      -DgroupId=none \
+      -DartifactId=parent-project
+
+  # tidy the parent-project pom in a subdirectory
+  # mvn is not very flexible about pom names, better to leave unchanged
+  mv parent-project/* . && rmdir parent-project
+  mkdir etc && mv pom.xml etc/pom.xml
+
+** parent-project pom.xml
+
+  Add the 'packaging' line:
+
+  <groupId>none</groupId>
+  <artifactId>parent-project</artifactId>
+  <version>1.0</version>
+  <packaging>pom</packaging>
+
+  Specify relative sub-project paths here:
+
+  <modules>
+    <module>../puzzles/find_next_larger_permuted_number/Java</module>
+    <module>../puzzles/generate_natural_number_from_four/Java</module>
+  </modules>
+
+** child pom.xml template
+
+  <?xml version="1.0" encoding="UTF-8"?>
+
+  <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+      <artifactId>parent-project</artifactId>
+      <groupId>none</groupId>
+      <version>1.0</version>
+      <relativePath>../../etc/pom.xml</relativePath>
+    </parent>
+
+    <groupId>none</groupId>
+    <artifactId>PROJECT_NAME</artifactId>
+    <version>l.0</version>
+
+  </project>
+
+** build
+
+  # build one project in its subdirectory:
+  cd subdir
+  mvn clean test
+
+  # build all projects from root level, for example:
+  cd rootdir
+  mvn -f etc clean test
+
+
+* Maven default project structure
+
+See: http://maven.apache.org/pom.html#The_Super_POM
+
+  mvn help:effective-pom
+
+  <build>
+
+    <sourceDirectory>       FULL_PATH_TO_PROJECT_JAVA/src/main/java       </sourceDirectory>
+    <scriptSourceDirectory> FULL_PATH_TO_PROJECT_JAVA/src/main/scripts    </scriptSourceDirectory>
+    <testSourceDirectory>   FULL_PATH_TO_PROJECT_JAVA/src/test/java       </testSourceDirectory>
+
+    <outputDirectory>       FULL_PATH_TO_PROJECT_JAVA/target/classes      </outputDirectory>
+    <testOutputDirectory>   FULL_PATH_TO_PROJECT_JAVA/target/test-classes </testOutputDirectory>
+
+    <resources>
+      <resource>
+        <directory>         FULL_PATH_TO_PROJECT_JAVA/src/main/resources  </directory>
+      </resource>
+    </resources>
+
+    <testResources>
+      <testResource>
+        <directory>         FULL_PATH_TO_PROJECT_JAVA/src/test/resources  </directory>
+      </testResource>
+    </testResources>
+
+    <directory>             FULL_PATH_TO_PROJECT_JAVA/target              </directory>
+
+
+* Original state after populating with one subproject
+
+  $ tree -A
+  .
+  ├── etc
+  │   └── pom.xml
+  ├── journal.org
+  └── puzzles
+      └── find_next_larger_permuted_number
+          ├── Java
+          │   ├── pom.xml
+          │   └── src
+          │       ├── main
+          │       │   └── java
+          │       │       └── Solution.java
+          │       └── test
+          │           └── java
+          │               └── SolutionTest.java
+          ├── Python
+          │   └── solution.py
+          └── README.md
+
+
+* Maven flattened project structure
+
+  <build>
+
+    <!-- split and flatten source tree; leave target tree layout intact -->
+    
+    <!-- <sourceDirectory>src/main/java</sourceDirectory> -->
+    <!-- <scriptSourceDirectory>src/main/scripts</scriptSourceDirectory> -->
+    <!-- <testSourceDirectory>src/test/java</testSourceDirectory> -->
+    <sourceDirectory>src</sourceDirectory>
+    <scriptSourceDirectory>scripts</scriptSourceDirectory>
+    <testSourceDirectory>test</testSourceDirectory>
+
+    <!-- <outputDirectory>target/classes</outputDirectory> -->
+    <!-- <testOutputDirectory>target/test-classes</testOutputDirectory> -->
+
+    <resources>
+      <resource>
+        <!-- <directory>/src/main/resources</directory> -->
+        <directory>src/resources</directory>
+      </resource>
+    </resources>
+
+    <testResources>
+      <testResource>
+        <!-- <directory>src/test/resources</directory> -->
+        <directory>test/resources</directory>
+      </testResource>
+    </testResources>
+
+    <!-- <directory>/home/brown/Projects/Code/puzzles2/find_next_larger_permuted_number/Java/target</directory> -->
+
+
+* Simpler state after flattening
+
+  $ tree -A
+  .
+  ├── etc
+  │   └── pom.xml
+  ├── journal.org
+  └── puzzles
+      └── find_next_larger_permuted_number
+          ├── Java
+          │   ├── pom.xml
+          │   ├── src
+          │   │   └── Solution.java
+          │   └── test
+          │       └── SolutionTest.java
+          ├── Python
+          │   └── solution.py
+          └── README.md
+
