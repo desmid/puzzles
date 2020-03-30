@@ -54,7 +54,7 @@
       </testResource>
     </testResources>
 
-    <!-- <directory>/home/brown/Projects/Code/puzzles2/find_next_larger_permuted_number/Java/target</directory> -->
+    <!-- <directory>/home/brown/Projects/Puzzles/find_next_larger_permuted_number/Java/target</directory> -->
 
     <pluginManagement>
       <!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
@@ -109,8 +109,8 @@
   </reporting>
 
   <modules>
-    <module>../puzzles/find_next_larger_permuted_number/Java</module>
-    <module>../puzzles/generate_natural_number_from_four/Java</module>
+    <module>../find_next_larger_permuted_number/Java</module>
+    <module>../generate_natural_number_from_four/Java</module>
   </modules>
 
 </project>

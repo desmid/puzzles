@@ -8,11 +8,11 @@
     <artifactId>parent-project</artifactId>
     <groupId>none</groupId>
     <version>1.0</version>
-    <relativePath>../../../etc/pom.xml</relativePath>
+    <relativePath>../../etc/pom.xml</relativePath>
   </parent>
 
   <groupId>none</groupId>
   <artifactId>generate_natural_number_from_four</artifactId>
-  <version>l.0</version>
+  <version>1.0</version>
 
 </project>
